@@ -69,7 +69,7 @@ module.exports = async function handler(req, res) {
 
     const result = await response.json().catch(() => ({}));
     if (!response.ok || (result.failedMessageList?.length || 0) > 0) {
-      console.error('Solapi send failed:', response.status);
+      console.error('Solapi send failed:', response.status, JSON.stringify({ errorCode: result.errorCode || result.code || null, errorMessage: result.errorMessage || result.message || null }).slice(0, 500));
       return json(res, 502, { ok: false, message: '문자 발송에 실패했습니다.' });
     }
 
